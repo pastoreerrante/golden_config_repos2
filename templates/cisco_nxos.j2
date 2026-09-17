@@ -1,0 +1,9 @@
+ip domain-lookup
+{% if not config_context.dns_vrf %}
+ip domain-name {{ config_context.domain_name }}
+ip name-server {{ config_context.name_servers | join(' ') }}
+{% else %}
+vrf context {{ config_context.dns_vrf }}
+  ip domain-name {{ config_context.domain_name }}
+  ip name-server {{ config_context.name_servers | join(' ') }}
+{% endif %}
