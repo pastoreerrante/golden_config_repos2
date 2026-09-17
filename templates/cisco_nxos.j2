@@ -1,10 +1,11 @@
 ip domain-lookup
-{% if not config_context.dns_vrf %}
+{% if not config_context.dns_in_mgmt_vrf %}
 ip domain-name {{ config_context.domain_name }}
 ip name-server {{ config_context.name_servers | join(' ') }}
-{% else %}
-vrf context {{ config_context.dns_vrf }}
+{% endif %}
+vrf context {{ config_context.mgmt_vrf }}
+{% if config_context.dns_in_mgmt_vrf %}
   ip domain-name {{ config_context.domain_name }}
   ip name-server {{ config_context.name_servers | join(' ') }}
-  ip route 0.0.0.0/0 {{ config_context.default_gateway }}
 {% endif %}
+  ip route 0.0.0.0/0 {{ config_context.default_gateway }}
