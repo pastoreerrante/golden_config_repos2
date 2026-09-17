@@ -6,4 +6,5 @@ ip name-server {{ config_context.name_servers | join(' ') }}
 vrf context {{ config_context.dns_vrf }}
   ip domain-name {{ config_context.domain_name }}
   ip name-server {{ config_context.name_servers | join(' ') }}
+  ip route 0.0.0.0/0 {{ config_context.default_gateway }}
 {% endif %}
